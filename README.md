@@ -39,7 +39,7 @@ Usage of spk:
 
 **spritzgebaeck** can be used to find CIDRs for a given organization. In this example for "TUI GmbH":
 
-```
+```json
 $ spk -silent -json -s "TUI GmbH"
 {"cidr":"213.61.68.136/29","source":"ripe"}
 {"cidr":"62.48.80.0/24","source":"ripe"}
@@ -84,7 +84,7 @@ $ spk -silent -json -s "TUI GmbH"
 
 Use `spk` to find a specific netrange + get more information through `whois`:
 
-```
+```sh
 $ spk -silent -json -s "TUI GmbH" | xargs -I"{}" whois "{}"
 % This is the RIPE Database query service.
 % The objects are in RPSL format.
@@ -194,7 +194,7 @@ source:         RIPE
 
 Let's use `spk` and `dnsx` [1] to find domains within the netranges:
 
-```
+```sh
 $ spk -silent -s "TUI GmbH" | dnsx -silent -ptr -resp-only | grep tui
 tuicrew-zqw-gw.zweibruecken.transkom.net
 tuicrew-zqw-vpn.zweibruecken.transkom.net
@@ -253,9 +253,8 @@ prod.tui-uk.plusline.net
 
 Another use case could be to concat `dnsx`, `subfinder` [2] and `unfurl` [3] to find subdomains within the netrange:
 
-```
-$ spk -silent -s "TUI GmbH" | dnsx -silent -ptr -resp-only \
-     | unfurl format %r.%t | sort -u | grep -i tui \
+```json
+$ spk -silent -s "TUI GmbH" | dnsx -silent -ptr -resp-only | unfurl format %r.%t | sort -u | grep -i tui \
      | subfinder -silent -json -o output_subdomains.json
 
 {"host":"www.tui-airlines.com","input":"tui-airlines.com","source":"riddler"}
