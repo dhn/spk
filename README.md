@@ -11,7 +11,7 @@
         made with <3
 ```
 
-*spk* aka **spritzgebaeck** is a small Golang tool that use different sources to get CIDRs/ASN for an organization.
+*spk* aka **spritzgebaeck**: A small OSINT/Recon tool to find CIDRs that belong to a specific organization.
 
 # Building
 
