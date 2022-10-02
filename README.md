@@ -40,7 +40,7 @@ Usage of spk:
 **spritzgebaeck** can be used to find CIDRs for a given organization. In this example for "TUI GmbH":
 
 ```
-$ spk -silent -json -s "Dr. August Oetker KG"
+$ spk -silent -json -s "TUI GmbH"
 {"cidr":"213.61.68.136/29","source":"ripe"}
 {"cidr":"62.48.80.0/24","source":"ripe"}
 {"cidr":"212.41.250.144/28","source":"ripe"}
