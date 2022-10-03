@@ -13,6 +13,11 @@
 
 *spk* aka **spritzgebaeck**: A small OSINT/Recon tool to find CIDRs that belong to a specific organization.
 
+<p align="left">
+<a href="https://goreportcard.com/report/github.com/dhn/spk/rojectdiscovery/subfinder/v2"><img src="https://goreportcard.com/badge/github.com/dhn/spk"></a>
+<a href="https://github.com/dhn/spk/issues"><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"></a>
+</p>
+
 # Building
 
 * Download & install Go: https://golang.org/doc/install
