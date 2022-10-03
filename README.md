@@ -85,7 +85,7 @@ $ spk -silent -json -s "TUI GmbH"
 Use `spk` to find a specific netrange + get more information through `whois`:
 
 ```sh
-$ spk -silent -json -s "TUI GmbH" | xargs -I"{}" whois "{}"
+$ spk -silent -s "TUI GmbH" | xargs -I"{}" whois "{}"
 % This is the RIPE Database query service.
 % The objects are in RPSL format.
 %
