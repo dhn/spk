@@ -37,3 +37,28 @@ func GetHTTPRequest(url string, headers map[string]string) *fasthttp.Response {
 
 	return resp
 }
+
+// POST HTTP wrapper with client certification
+func PostHTTPRequest(url string, data []byte) *fasthttp.Response {
+	req := fasthttp.AcquireRequest()
+	req.SetRequestURI(url)
+	req.SetBody(data)
+
+	req.Header.SetMethod("POST")
+	req.Header.Add("User-Agent", uarand.GetRandom())
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+
+	resp := fasthttp.AcquireResponse()
+	client := &fasthttp.Client{
+		Dial: func(addr string) (net.Conn, error) {
+			return fasthttp.DialTimeout(addr, time.Second*10)
+		},
+	}
+
+	err := client.Do(req, resp)
+	if err != nil {
+		gologger.Fatal().Msgf(err.Error())
+	}
+
+	return resp
+}
