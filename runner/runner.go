@@ -11,7 +11,7 @@ import (
 
 // Get the net-ranges based on the "descr" field in the whois response
 func Whois(organization string, options utils.Options) {
-	netranges := utils.MergeChannels(sources.GetAPNICData(organization), sources.GetBGPData(organization), sources.GetRipeData(organization))
+	netranges := utils.MergeChannels(sources.GetAPNICData(organization), sources.GetBGPData(organization), sources.GetBGPToolsData(organization), sources.GetRipeData(organization), sources.GetARINData(organization))
 	netranges = utils.RemoveDuplicates(netranges)
 
 	utils.PrintResults(options.JSON, netranges)
