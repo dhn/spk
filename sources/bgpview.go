@@ -8,19 +8,30 @@ import (
 	"bytes"
 	"fmt"
 	"net/url"
-	"strings"
 
-	"github.com/PuerkitoBio/goquery"
 	"github.com/dhn/spk/utils"
+	jsoniter "github.com/json-iterator/go"
 	"github.com/projectdiscovery/gologger"
 )
+
+// BGPView JSON results
+type bgpview struct {
+	Data struct {
+		Ipv4Prefixes []struct {
+			Prefix string `json:"prefix"`
+		} `json:"ipv4_prefixes"`
+		Ipv6Prefixes []struct {
+			Prefix string `json:"prefix"`
+		} `json:"ipv6_prefixes"`
+	}
+}
 
 // GetBGPData function returns all netranges based on the given organization name
 func GetBGPData(organization string) <-chan utils.Result {
 	results := make(chan utils.Result)
 
 	go func() {
-		getBGPViewData(fmt.Sprintf("https://bgpview.io/search/%s#results-v4",
+		getBGPViewData(fmt.Sprintf("https://api.bgpview.io/search?query_term=%s",
 			url.QueryEscape(organization)), results)
 		close(results)
 	}()
@@ -28,21 +39,20 @@ func GetBGPData(organization string) <-chan utils.Result {
 	return results
 }
 
-// Send a HTTP request and parse the HTML response
+// Send a HTTP request and parse the JSON response
 func getBGPViewData(sourceURL string, results chan utils.Result) {
-	resp := utils.GetHTTPRequest(sourceURL, map[string]string{})
+	resp := utils.GetHTTPRequest(sourceURL, map[string]string{"Content-Type": "application/json"})
 
-	doc, err := goquery.NewDocumentFromReader(bytes.NewReader(resp.Body()))
+	var response bgpview
+	err := jsoniter.NewDecoder(bytes.NewReader(resp.Body())).Decode(&response)
 	if err != nil {
-		gologger.Error().Msgf("%s", err)
+		gologger.Fatal().Msgf(err.Error())
 	}
 
-	// Parse html to get the needed data
-	doc.Find("a").Each(func(i int, s *goquery.Selection) {
-		href, _ := s.Attr("href")
-		if strings.Contains(href, "https://bgpview.io/prefix/") {
-			cidr := s.Text()
-			results <- utils.Result{Value: cidr, Source: "bgpview"}
-		}
-	})
+	ipv4 := response.Data.Ipv4Prefixes
+	ipv6 := response.Data.Ipv6Prefixes
+
+	for _, data := range append(ipv4, ipv6...) {
+		results <- utils.Result{Value: data.Prefix, Source: "bgpview"}
+	}
 }
