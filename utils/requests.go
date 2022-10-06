@@ -38,7 +38,7 @@ func GetHTTPRequest(url string, headers map[string]string) *fasthttp.Response {
 	return resp
 }
 
-// POST HTTP wrapper with client certification
+// POST HTTP wrapper
 func PostHTTPRequest(url string, data []byte) *fasthttp.Response {
 	req := fasthttp.AcquireRequest()
 	req.SetRequestURI(url)
