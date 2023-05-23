@@ -6,6 +6,7 @@ package utils
 
 import (
 	"sync"
+	"regexp"
 
 	"github.com/projectdiscovery/gologger"
 )
@@ -59,4 +60,13 @@ func MergeChannels(channels ...<-chan Result) <-chan Result {
 		close(out)
 	}()
 	return out
+}
+
+func CheckNumber(cidr string) bool {
+	reg := regexp.MustCompile(`^\d.*`)
+	if reg.MatchString(cidr) {
+		return true
+	} else {
+		return false
+	}
 }

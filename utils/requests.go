@@ -32,7 +32,7 @@ func GetHTTPRequest(url string, headers map[string]string) *fasthttp.Response {
 
 	err := client.Do(req, resp)
 	if err != nil {
-		gologger.Fatal().Msgf(err.Error())
+		gologger.Error().Msgf(err.Error())
 	}
 
 	return resp
@@ -57,7 +57,7 @@ func PostHTTPRequest(url string, data []byte) *fasthttp.Response {
 
 	err := client.Do(req, resp)
 	if err != nil {
-		gologger.Fatal().Msgf(err.Error())
+		gologger.Error().Msgf(err.Error())
 	}
 
 	return resp
