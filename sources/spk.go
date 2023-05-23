@@ -12,7 +12,6 @@ import (
 
 	"github.com/dhn/spk/utils"
 	jsoniter "github.com/json-iterator/go"
-	"github.com/projectdiscovery/gologger"
 )
 
 // SPK JSON results
@@ -44,7 +43,7 @@ func getSPKData(sourceURL string, results chan utils.Result) {
 	var response spk
 	err := jsoniter.NewDecoder(bytes.NewReader(resp.Body())).Decode(&response)
 	if err != nil {
-		gologger.Fatal().Msgf(err.Error())
+		return
 	}
 
 	for _, result := range response {

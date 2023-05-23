@@ -11,7 +11,6 @@ import (
 
 	"github.com/dhn/spk/utils"
 	jsoniter "github.com/json-iterator/go"
-	"github.com/projectdiscovery/gologger"
 )
 
 // BGPView JSON results
@@ -46,7 +45,7 @@ func getBGPViewData(sourceURL string, results chan utils.Result) {
 	var response bgpview
 	err := jsoniter.NewDecoder(bytes.NewReader(resp.Body())).Decode(&response)
 	if err != nil {
-		gologger.Fatal().Msgf(err.Error())
+		return
 	}
 
 	ipv4 := response.Data.Ipv4Prefixes

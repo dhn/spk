@@ -13,7 +13,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/dhn/spk/utils"
 	jsoniter "github.com/json-iterator/go"
-	"github.com/projectdiscovery/gologger"
 )
 
 // ARIN JSON results
@@ -67,7 +66,7 @@ func getARINData(sourceURL string, organization string, results chan utils.Resul
 
 	doc, err := goquery.NewDocumentFromReader(bytes.NewReader(resp.Body()))
 	if err != nil {
-		gologger.Error().Msgf("%s", err)
+		return
 	}
 
 	// Parse html to get the needed data
@@ -97,7 +96,7 @@ func getARINCIDR(sourceURL string) []string {
 
 		err := jsoniter.NewDecoder(bytes.NewReader(resp.Body())).Decode(&response)
 		if err != nil {
-			gologger.Fatal().Msgf(err.Error())
+			return cidr
 		}
 
 		for _, netblocks := range response.Net.NetBlocks.NetBlock {

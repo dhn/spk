@@ -12,7 +12,6 @@ import (
 
 	"github.com/dhn/spk/utils"
 	jsoniter "github.com/json-iterator/go"
-	"github.com/projectdiscovery/gologger"
 )
 
 // APNIC JSON results
@@ -43,7 +42,7 @@ func getAPNICDData(sourceURL string, organization string, results chan utils.Res
 	var response apnic
 	err := jsoniter.NewDecoder(bytes.NewReader(resp.Body())).Decode(&response)
 	if err != nil {
-		gologger.Fatal().Msgf(err.Error())
+		return
 	}
 
 	// Example Response:

@@ -50,7 +50,9 @@ func getBGPToolsData(sourceURL string, organization string, results chan utils.R
 		if strings.Contains(name, "nowrap") {
 			// Print if the description contains the organization and if the CIDR don't start with AS
 			if strings.Contains(strings.ToLower(s.Text()), strings.ToLower(organization)) && !strings.HasPrefix(cidr, "AS") {
-				results <- utils.Result{Value: cidr, Source: "bgptools"}
+				if utils.CheckNumber(cidr) {
+					results <- utils.Result{Value: cidr, Source: "bgptools"}
+				}
 			}
 		}
 	})
