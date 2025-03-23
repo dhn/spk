@@ -1,6 +1,8 @@
 module github.com/dhn/spk
 
-go 1.17
+go 1.23.0
+
+toolchain go1.23.7
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0
@@ -18,5 +20,5 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	golang.org/x/net v0.33.0 // indirect
+	golang.org/x/net v0.36.0 // indirect
 )
